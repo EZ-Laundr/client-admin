@@ -8,6 +8,9 @@ import EditService from './pages/Services/EditService'
 import Perfume from './pages/Perfumes/Perfume'
 import AddPerfume from './pages/Perfumes/AddPerfume'
 import EditPerfume from './pages/Perfumes/EditPerfume'
+import Special from './pages/Specials/Special'
+import AddSpecial from './pages/Specials/AddSpecial'
+import EditSpecial from './pages/Specials/EditSpecial'
 export default function App() {
   return (
     <>
@@ -36,6 +39,15 @@ export default function App() {
           </Route>
           <Route exact path="/perfumes/edit/:id">
             <EditPerfume />
+          </Route>
+          <Route exact path="/specials">
+            <Special />
+          </Route>
+          <Route exact path="/specials/add">
+            <AddSpecial />
+          </Route>
+          <Route exact path="/specials/edit/:id">
+            <EditSpecial />
           </Route>
         </Switch>
       </BrowserRouter>
