@@ -19,7 +19,9 @@ export default function Home() {
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Order ID</th>
                                             <th>Customer Name</th>
+                                            <th>Service</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -27,29 +29,14 @@ export default function Home() {
                                     <tbody>
                                         <tr>
                                             <th>1</th>
-                                            <td>Customer 1</td>
+                                            <td>1</td>
+                                            <td>Bambang</td>
+                                            <td>Cuci Aja</td>
                                             <td>Progress</td>
-                                            <td>Detail</td>
+                                            <td>
+                                                <button className="btn btn-accent ">Detail</button>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <th>2</th>
-                                            <td>Customer 2</td>
-                                            <td>Selesai</td>
-                                            <td>Detail</td>
-                                        </tr>
-                                        <tr>
-                                            <th>3</th>
-                                            <td>Customer 3</td>
-                                            <td>Dicuci</td>
-                                            <td>Detail</td>
-                                        </tr>
-                                        <tr>
-                                            <th>4</th>
-                                            <td>Customer 4</td>
-                                            <td>Ngilang</td>
-                                            <td>Detail</td>
-                                        </tr>
-
                                     </tbody>
                                 </table>
                             </div>
