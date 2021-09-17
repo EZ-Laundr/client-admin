@@ -1,0 +1,22 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "name": "Cuci Kering",
+      "price": 5000,
+      "imageUrl": "https://image-cdn.medkomtek.com/VBJlgVs_GRDmzhLbsd3PJCEUOhk=/673x379/smart/klikdokter-media-buckets/medias/2263302/original/061757600_1530255518-Agar-Tidak-Kram-Otot-Hindari-Ini-Saat-Mencuci-Baju-By-birdbyb-stockphoto-shutterstock.jpg"
+    },
+    {
+      "name": "cuci strika",
+      "price": "8000",
+      "imageUrl": "https://i2.wp.com/www.ruangfreelance.com/wp-content/uploads/2014/08/ew.jpg?resize=700%2C400",
+      "id": 2
+    }
+  ],
+  "perfumes": [
+    {}
+  ],
+  "specials": [
+    {}
+  ]
+}
