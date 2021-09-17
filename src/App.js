@@ -12,6 +12,7 @@ import Special from './pages/Specials/Special'
 import AddSpecial from './pages/Specials/AddSpecial'
 import EditSpecial from './pages/Specials/EditSpecial'
 import Detail from './pages/Detail'
+import Qr from './pages/Qr'
 export default function App() {
   return (
     <>
@@ -52,6 +53,9 @@ export default function App() {
           </Route>
           <Route exact path="/detail/:id">
             <Detail />
+          </Route>
+          <Route exact path="/qr">
+            <Qr />
           </Route>
         </Switch>
       </BrowserRouter>
