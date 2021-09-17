@@ -2,9 +2,12 @@ import './index.css'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
-import Services from './pages/Services/Service'
+import Service from './pages/Services/Service'
 import AddService from './pages/Services/AddService'
 import EditService from './pages/Services/EditService'
+import Perfume from './pages/Perfumes/Perfume'
+import AddPerfume from './pages/Perfumes/AddPerfume'
+import EditPerfume from './pages/Perfumes/EditPerfume'
 export default function App() {
   return (
     <>
@@ -17,13 +20,22 @@ export default function App() {
             <Login />
           </Route>
           <Route exact path="/services">
-            <Services />
+            <Service />
           </Route>
           <Route exact path="/services/add">
             <AddService />
           </Route>
           <Route exact path="/services/edit/:id">
             <EditService />
+          </Route>
+          <Route exact path="/perfumes">
+            <Perfume />
+          </Route>
+          <Route exact path="/perfumes/add">
+            <AddPerfume />
+          </Route>
+          <Route exact path="/perfumes/edit/:id">
+            <EditPerfume />
           </Route>
         </Switch>
       </BrowserRouter>
