@@ -35,7 +35,7 @@ export default function Sidebar() {
                                 </Link>
                             </li>
                             <li>
-                                <Link className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
+                                <Link to="/specials" className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
                                     <i class="far fa-gem fa-lg"></i>
                                     <span className="ml-4">Special Treatments</span>
                                 </Link>
