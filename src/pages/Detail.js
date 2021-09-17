@@ -12,7 +12,7 @@ export default function Detail() {
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">
-                        <section className="text-gray-600 body-font overflow-hidden">
+                        <div className="text-gray-600 body-font overflow-hidden">
                             <div className="container px-5 py-10 mx-auto">
                                 <h1 className="sm:text-3xl text-2xl font-medium title-font mb-10 text-gray-900 flex justify-center">Detail Order</h1>
                                 <div className="lg:w-4/5 mx-auto flex flex-wrap">
@@ -50,7 +50,7 @@ export default function Detail() {
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </div>
 
                     </div>
                     <Footer />
