@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
@@ -5,6 +6,11 @@ import '../index.css'
 
 
 export default function Home() {
+    const history = useHistory()
+    function detail() {
+        const id = 1
+        history.push(`/detail/${id}`)
+    }
     return (
         <>
             <div className="flex">
@@ -34,7 +40,7 @@ export default function Home() {
                                             <td>Cuci Aja</td>
                                             <td>Progress</td>
                                             <td>
-                                                <button className="btn btn-accent ">Detail</button>
+                                                <button onClick={detail} className="btn btn-accent ">Detail</button>
                                             </td>
                                         </tr>
                                     </tbody>
