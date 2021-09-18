@@ -2,22 +2,57 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import '../index.css'
 import { deleteService, getServices, oneService } from '../store/services/action'
+import Swal from 'sweetalert2'
+import { deletePerfume, getPerfumes, onePerfume } from '../store/perfumes/action'
 
-export default function TrMaster({ el, i }) {
+export default function TrMaster({ el, i, type }) {
     const history = useHistory()
     const dispacth = useDispatch()
     async function edit() {
         const id = el.id
-        const result = await dispacth(oneService(id))
-        if (result) {
-            history.push(`/services/edit/${id}`)
+        let result
+        if (type === 'services') {
+            result = await dispacth(oneService(id))
+            if (result) {
+                history.push(`/services/edit/${id}`)
+            }
+        } else if (type === 'perfumes') {
+            result = await dispacth(onePerfume(id))
+            if (result) {
+                history.push(`/perfumes/edit/${id}`)
+            }
         }
     }
     async function serviceDelete() {
+        const id = el.id
+        let result
         try {
-            const result = await dispacth(deleteService(el.id))
-            if (result) {
-                dispacth(getServices())
+            const { isConfirmed } = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You sure delete this ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            })
+            if (isConfirmed) {
+                if (type === 'services') {
+                    result = await dispacth(deleteService(id))
+                    if (result) {
+                        dispacth(getServices())
+                    }
+                } else if (type === 'perfumes') {
+                    result = await dispacth(deletePerfume(id))
+                    if (result) {
+                        dispacth(getPerfumes())
+                    }
+                }
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
             }
         } catch (err) {
             console.log(err)
