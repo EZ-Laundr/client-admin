@@ -14,9 +14,19 @@
     }
   ],
   "perfumes": [
-    {}
+    {
+      "name": "Akasia",
+      "price": "9000",
+      "imageUrl": "https://id-live-05.slatic.net/shop/d1c34da39de8e9dc53b57de55024ea23.png_2200x2200q80.jpg_.webp",
+      "id": 1
+    }
   ],
   "specials": [
-    {}
+    {
+      "name": "Sprei",
+      "price": "9000",
+      "imageUrl": "https://adela.co.id/wp-content/uploads/2019/09/Damask-min.jpg",
+      "id": 1
+    }
   ]
 }

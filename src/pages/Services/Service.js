@@ -26,7 +26,7 @@ export default function Service() {
                     <div className=" flex-grow min-h-16">
                         <div className="container px-5 py-10 mx-auto">
                             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-10 text-gray-900 flex justify-center">Services</h1>
-                            <TableMaster data={services} />
+                            <TableMaster data={services} type="services" />
                         </div>
                     </div>
                     <Footer />
