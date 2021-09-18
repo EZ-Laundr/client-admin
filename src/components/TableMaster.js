@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router'
-import '../index.css'
 import TrMaster from './TrMaster'
+import '../index.css'
 
 export default function TableMaster({ data, type }) {
     const history = useHistory()
@@ -9,6 +9,8 @@ export default function TableMaster({ data, type }) {
             history.push('/services/add')
         } else if (type === 'perfumes') {
             history.push('/perfumes/add')
+        } else if (type === 'special treatments') {
+            history.push('/specials/add')
         }
     }
 

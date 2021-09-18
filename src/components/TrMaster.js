@@ -4,6 +4,7 @@ import '../index.css'
 import { deleteService, getServices, oneService } from '../store/services/action'
 import Swal from 'sweetalert2'
 import { deletePerfume, getPerfumes, onePerfume } from '../store/perfumes/action'
+import { deleteSpecial, getSpecials, oneSpecial } from '../store/specials/action'
 
 export default function TrMaster({ el, i, type }) {
     const history = useHistory()
@@ -20,6 +21,11 @@ export default function TrMaster({ el, i, type }) {
             result = await dispacth(onePerfume(id))
             if (result) {
                 history.push(`/perfumes/edit/${id}`)
+            }
+        } else if (type === 'special treatments') {
+            result = await dispacth(oneSpecial(id))
+            if (result) {
+                history.push(`/specials/edit/${id}`)
             }
         }
     }
@@ -46,6 +52,11 @@ export default function TrMaster({ el, i, type }) {
                     result = await dispacth(deletePerfume(id))
                     if (result) {
                         dispacth(getPerfumes())
+                    }
+                } else if (type === 'special treatments') {
+                    result = await dispacth(deleteSpecial(id))
+                    if (result) {
+                        dispacth(getSpecials())
                     }
                 }
                 Swal.fire(
