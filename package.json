@@ -17,6 +17,8 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
+    "stream-chat": "^4.2.0",
+    "stream-chat-react": "^6.8.0",
     "sweetalert2": "^11.1.5",
     "web-vitals": "^1.1.2"
   },

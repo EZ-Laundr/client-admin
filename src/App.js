@@ -15,6 +15,7 @@ import Detail from './pages/Detail'
 import Qr from './pages/Qr'
 import { Provider } from 'react-redux'
 import store from './store'
+import ChatRooms from './pages/ChatRooms'
 
 
 export default function App() {
@@ -23,6 +24,9 @@ export default function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
+            <Route exact path="/chat">
+              <ChatRooms />
+            </Route>
             <Route exact path="/">
               <Home />
             </Route>

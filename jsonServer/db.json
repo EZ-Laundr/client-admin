@@ -28,5 +28,38 @@
       "imageUrl": "https://adela.co.id/wp-content/uploads/2019/09/Damask-min.jpg",
       "id": 1
     }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "Users": {
+        "name": "Customer Satu"
+      },
+      "Services": {
+        "name": "Cuci Aja",
+        "price": 5000
+      },
+      "Perfumes": {
+        "name": "Malaikat Shubuh",
+        "price": 4000
+      },
+      "SpecialTreatments": [
+        {
+          "name": "Sprei",
+          "price": 3000,
+          "qty": 3
+        },
+        {
+          "name": "Selimut",
+          "price": 2000,
+          "qty": 1
+        }
+      ],
+      "pickUp": true,
+      "address": "Ini tergantung Pickupnya , kalo false bisa null aja atau string kosong",
+      "rangeAddress": 10,
+      "weight": 0,
+      "status": "on progress"
+    }
   ]
 }
