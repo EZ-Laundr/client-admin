@@ -21,6 +21,7 @@ export function getOrders() {
             const { data } = await orderApi({
                 method: 'get'
             })
+            console.log(data)
             dispacth(setOrders(data))
             return data
         } catch (err) {
@@ -38,6 +39,22 @@ export function oneOrder(id) {
             })
             dispacth(setOneOrder(data))
             return data
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+export function sendWeight(weight) {
+    return async function () {
+        try {
+            const result = await orderApi({
+                method: 'put',
+                data: {
+                    weight
+                }
+            })
+            console.log(result)
         } catch (err) {
             console.log(err)
         }

@@ -7,9 +7,9 @@ export default function TrTreatment({ el, i }) {
                 <th>{i + 1}</th>
                 <td>{el.name}</td>
                 <td>{el.price}</td>
-                <td>{el.qty}</td>
+                <td>{el.quantity}</td>
                 <td>
-                    {Number(el.price) * Number(el.qty)}
+                    {Number(el.price) * Number(el.quantity)}
                 </td>
             </tr>
         </>

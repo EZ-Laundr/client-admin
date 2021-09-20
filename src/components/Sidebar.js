@@ -1,8 +1,14 @@
 import '../index.css'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
+export default function Sidebar({ changeLogin }) {
+    const history = useHistory()
 
-export default function Sidebar() {
+    function logout() {
+        localStorage.clear()
+        changeLogin(false)
+        history.push({ pathname: '/login' })
+    }
     return (
         <>
             <div className="flex-none flex-col md:flex md:flex-row md:min-h-screen bg-blueGray-50">
@@ -25,7 +31,7 @@ export default function Sidebar() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/services" className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
+                                <Link to={{ pathname: '/services' }} className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
                                     <i class="fa-lg fas fa-hand-sparkles"></i>
                                     <span className="ml-4">Services</span>
                                 </Link>
@@ -47,6 +53,12 @@ export default function Sidebar() {
                                     <i class="fas fa-qrcode fa-lg"></i>
                                     <span className="ml-4">Scan QR Code</span>
                                 </Link>
+                            </li>
+                            <li>
+                                <button onClick={logout} className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
+                                    <i class="fas fa-sign-out-alt fa-lg"></i>
+                                    <span className="ml-4">Logout</span>
+                                </button>
                             </li>
                         </ul>
                     </nav>

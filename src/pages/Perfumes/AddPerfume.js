@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import Footer from '../../components/Footer'
@@ -8,7 +8,7 @@ import '../../index.css'
 import { addPerfume } from '../../store/perfumes/action'
 
 
-export default function AddPerfume() {
+export default function AddPerfume({ changeLogin }) {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [imageUrl, setImageUrl] = useState('')
@@ -24,10 +24,17 @@ export default function AddPerfume() {
             history.push('/perfumes')
         }
     }
+
+    useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
+    }, [])
+
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">

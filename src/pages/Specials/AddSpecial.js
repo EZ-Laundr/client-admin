@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import Footer from '../../components/Footer'
@@ -8,7 +8,7 @@ import '../../index.css'
 import { addSpecial } from '../../store/specials/action'
 
 
-export default function AddSpecial() {
+export default function AddSpecial({ changeLogin }) {
     const dispacth = useDispatch()
     const history = useHistory()
     const [name, setName] = useState('')
@@ -27,13 +27,18 @@ export default function AddSpecial() {
         } catch (err) {
             console.log(err)
         }
-
     }
+
+    useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
+    }, [])
 
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">

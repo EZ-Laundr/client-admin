@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
+import orderApi from '../apis/order'
 import '../index.css'
-import { oneOrder } from '../store/orders/action'
+import { getOrders, oneOrder } from '../store/orders/action'
 
 export default function TrOrder({ el, i }) {
     const history = useHistory()
@@ -20,16 +21,33 @@ export default function TrOrder({ el, i }) {
 
     }
 
+    async function updateStatus() {
+        try {
+            const result = await orderApi({
+                method: 'patch',
+                url: `/${el.id}`
+            })
+            dispacth(getOrders())
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <tr>
                 <th>{i + 1}</th>
                 <td>{el.id}</td>
-                <td>{el.Users.name}</td>
-                <td>{el.Services.name}</td>
+                <td>{el.User.email}</td>
+                <td>{el.Service.name}</td>
                 <td>{el.status}</td>
                 <td>
                     <button onClick={detail} className="btn btn-accent ">Detail</button>
+                    {
+                        el.status === 'On Progress' && (
+                            <button onClick={updateStatus} className="btn btn-accent ">Done</button>
+                        )
+                    }
                 </td>
             </tr>
         </>

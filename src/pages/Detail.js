@@ -1,55 +1,81 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router'
+import { Redirect, useHistory, useParams } from 'react-router'
+import orderApi from '../apis/order'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import TableTreatmen from '../components/TableTreatmen'
 import '../index.css'
+import { oneOrder, sendWeight } from '../store/orders/action'
 
 
-export default function Detail() {
+export default function Detail({ changeLogin }) {
     const { id } = useParams()
     const history = useHistory()
     const dispacth = useDispatch()
     const { oneOrder: order } = useSelector(store => {
         return store.orders
     })
-
-    const [customerName, setCustomerName] = useState(order.Users.name)
-    const [status, setStatus] = useState(order.status)
-    const [service, setService] = useState(order.Services.name)
-    const [pickUp, setPickUp] = useState(order.pickUp)
-    const [treatmens, setTreatments] = useState(order.SpecialTreatments)
-    const [priceService, setPriceService] = useState(order.Services.price)
-    const [pricePerfume, setPricePerfume] = useState(order.Perfumes.price)
-    const [priceTreatments, setPriceTreatments] = useState(0)
-    const [pricePickUp, setPricePickUp] = useState(
-        pickUp ? Number(order.rangeAddress) * 2000 : 0
-    )
+    const [email, setEmail] = useState('')
+    const [status, setStatus] = useState('')
+    const [service, setService] = useState('')
+    const [perfume, setPerfume] = useState('')
+    const [pickUp, setPickUp] = useState('')
+    const [orderSpecials, setOrderSpecials] = useState([])
+    const [cutomerAddress, setCutomerAddress] = useState('')
     const [weight, setWeight] = useState('')
-    const [totalPrice, setTotalPrice] = useState(0)
+    const [totalPrice, setTotalPrice] = useState('')
+    const [priceService, setPriceService] = useState('')
 
 
-
-    useEffect(() => {
-        let totalPriceTreatments = 0
-        treatmens?.forEach(el => {
-            totalPriceTreatments += Number(el.price) * Number(el.qty)
-        })
-        setPriceTreatments(totalPriceTreatments)
+    useEffect(async () => {
+        try {
+            if (localStorage.getItem('access_token')) {
+                const result = await dispacth(oneOrder(id))
+                setEmail(result?.User.email)
+                setStatus(result?.status)
+                setService(result?.Service.name)
+                setPickUp(result?.pickUp)
+                setOrderSpecials(result?.OrderSpecials)
+                setCutomerAddress(result?.cutomerAddress)
+                setPriceService(result?.Service.price)
+                setPerfume(result?.Perfume.name)
+                setTotalPrice(result?.totalPrice)
+            } else {
+                history.push('/login')
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }, [])
 
     useEffect(() => {
-        let allPrice = 0
-        let totalWeight = weight === '' ? 1 : weight
-        allPrice += (Number(priceService) * Number(totalWeight)) + Number(pricePerfume) + Number(priceTreatments) + Number(pricePickUp)
-        setTotalPrice(allPrice)
-    }, [priceService, pricePerfume, priceTreatments, pricePickUp, weight])
+        const before = order.totalPrice
+        const totalWeight = weight === 0 ? 1 : weight
+        setTotalPrice(before + Number(Number(priceService) * Number(totalWeight)))
+    }, [weight])
+
+    async function processOrder() {
+        try {
+            const result = await orderApi({
+                method: 'put',
+                url: `/${order.id}`,
+                data: { weight }
+            })
+            if (result) {
+                history.push('/')
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">
@@ -59,13 +85,13 @@ export default function Detail() {
                                 <div className="lg:w-4/5 mx-auto flex flex-wrap">
                                     <div className=" w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
                                         <div className="flex justify-between">
-                                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">{customerName}</h1>
+                                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">{email}</h1>
                                             <div className="text-gray-900 text-xl title-font font-medium mb-4">
                                                 Status : <div class="badge badge-accent p-5">{status}</div>
                                             </div>
                                         </div>
                                         <div className="text-lg title-font  tracking-widest mb-4">Service: {service} <i className="text-green-500 fa-lg far fa-check-circle"></i></div>
-                                        <div className="text-lg title-font  tracking-widest mb-4">Perfume: Akasa <i className="text-green-500 fa-lg far fa-check-circle"></i></div>
+                                        <div className="text-lg title-font  tracking-widest mb-4">Perfume: {perfume} <i className="text-green-500 fa-lg far fa-check-circle"></i></div>
                                         <div className="text-lg title-font  tracking-widest mb-4">
                                             Antar Jemput
                                             {
@@ -76,10 +102,8 @@ export default function Detail() {
                                             pickUp && (
                                                 <div className="flex items-center justify-between border-t border-b border-gray-200 py-2 mb-2">
                                                     <div className="text-gray-500 w-1/2">
-                                                        Your alamat
+                                                        {cutomerAddress}
                                                     </div>
-                                                    <span className="text-gray-900">10 Km</span>
-                                                    <span className="text-gray-900">2000/km</span>
                                                 </div>
                                             )
                                         }
@@ -87,20 +111,27 @@ export default function Detail() {
                                         <div className="text-lg title-font  tracking-widest mb-4">
                                             Special Treatments
                                             {
-                                                treatmens?.length === 0 ? <i className="text-red-500 fa-lg fas fa-minus-circle"></i> : <i className="text-green-500 fa-lg far fa-check-circle"></i>
+                                                orderSpecials?.length === 0 ? <i className="text-red-500 fa-lg fas fa-minus-circle"></i> : <i className="text-green-500 fa-lg far fa-check-circle"></i>
                                             }
                                         </div>
                                         {
-                                            treatmens?.length !== 0 && (<TableTreatmen data={treatmens} />)
+                                            orderSpecials?.length !== 0 && (<TableTreatmen data={orderSpecials} />)
                                         }
 
                                         <div className="flex border-gray-200 py-2 -mt-4">
-                                            <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="input weight" class="input input-bordered w-full" />
+                                            {
+                                                order.weight === 0 ? (
+                                                    <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="input weight" class="input input-bordered w-full" />
+                                                ) : (
+                                                    <div className="text-lg title-font  tracking-widest mb-4">Weight: {order.weight} Kg</div>
+                                                )
+                                            }
+
                                         </div>
                                         <hr />
                                         <div className="flex mt-3">
                                             <span className="title-font font-medium text-2xl text-gray-900">RP {totalPrice}</span>
-                                            <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Process</button>
+                                            <button onClick={processOrder} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Process</button>
                                         </div>
                                     </div>
                                 </div>

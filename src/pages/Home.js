@@ -6,9 +6,10 @@ import Sidebar from '../components/Sidebar'
 import TableOrder from '../components/TableOrder'
 import '../index.css'
 import { getOrders } from '../store/orders/action'
+import { Redirect } from 'react-router-dom'
 
 
-export default function Home() {
+export default function Home({ isLogin, changeLogin }) {
     const { orders } = useSelector(store => {
         return store.orders
     })
@@ -16,10 +17,13 @@ export default function Home() {
     useEffect(() => {
         dispacth(getOrders())
     }, [])
+    if (!isLogin) {
+        return <Redirect to="/login" />
+    }
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">
@@ -34,3 +38,4 @@ export default function Home() {
         </>
     )
 }
+

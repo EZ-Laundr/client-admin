@@ -9,7 +9,7 @@ import '../../index.css'
 import { oneService, updateService } from '../../store/services/action'
 
 
-export default function EditService() {
+export default function EditService({ changeLogin }) {
     const { id } = useParams()
     const { oneService: service } = useSelector(store => {
         return store.services
@@ -19,6 +19,12 @@ export default function EditService() {
     const [name, setName] = useState(service.name)
     const [price, setPrice] = useState(service.price)
     const [imageUrl, setImageUrl] = useState(service.imageUrl)
+
+    useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
+    }, [])
 
     useEffect(async () => {
         try {
@@ -41,10 +47,11 @@ export default function EditService() {
         }
     }
 
+
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">
