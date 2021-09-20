@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -8,19 +9,24 @@ import '../../index.css'
 import { getPerfumes } from '../../store/perfumes/action'
 
 
-export default function Perfume() {
+export default function Perfume({ changeLogin }) {
     const dispacth = useDispatch()
+    const history = useHistory()
     const { perfumes } = useSelector(store => {
         return store.perfumes
     })
     useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
         dispacth(getPerfumes())
     }, [])
+
 
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">

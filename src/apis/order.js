@@ -1,6 +1,12 @@
 import axios from "axios";
 
-const url = 'http://localhost:3004/orders'
-const orderApi = axios.create({ baseURL: url })
+const url = 'http://localhost:4000/admin/orders'
+const token = localStorage.getItem('access_token')
+const orderApi = axios.create({
+    baseURL: url,
+    headers: {
+        access_token: token
+    }
+})
 
 export default orderApi

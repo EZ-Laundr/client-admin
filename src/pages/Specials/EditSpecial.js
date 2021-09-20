@@ -8,7 +8,7 @@ import '../../index.css'
 import { oneSpecial, updateSpecial } from '../../store/specials/action'
 
 
-export default function EditSpecial() {
+export default function EditSpecial({ changeLogin }) {
     const { oneSpecial: special } = useSelector(store => {
         return store.specials
     })
@@ -18,6 +18,12 @@ export default function EditSpecial() {
     const [name, setName] = useState(special.name)
     const [price, setPrice] = useState(special.price)
     const [imageUrl, setImageUrl] = useState(special.imageUrl)
+
+    useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
+    }, [])
 
     useEffect(async () => {
         const result = await dispacth(oneSpecial(id))
@@ -43,7 +49,7 @@ export default function EditSpecial() {
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">

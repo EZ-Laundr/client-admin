@@ -8,7 +8,7 @@ import '../../index.css'
 import { onePerfume, updatePerfume } from '../../store/perfumes/action'
 
 
-export default function EditPerfume() {
+export default function EditPerfume({ isLogin, changeLogin }) {
     const { id } = useParams()
     const dispacth = useDispatch()
     const history = useHistory()
@@ -19,6 +19,12 @@ export default function EditPerfume() {
     const [price, setPrice] = useState(perfume.price)
     const [imageUrl, setImageUrl] = useState(perfume.imageUrl)
 
+    useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
+    }, [])
+
     useEffect(async () => {
         try {
             const result = await dispacth(onePerfume(id))
@@ -28,7 +34,6 @@ export default function EditPerfume() {
         } catch (err) {
             console(err)
         }
-
     }, [])
 
     async function edit() {
@@ -46,10 +51,11 @@ export default function EditPerfume() {
 
     }
 
+
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">

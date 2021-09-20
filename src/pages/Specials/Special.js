@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Redirect, useHistory } from 'react-router'
 import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -8,18 +9,24 @@ import '../../index.css'
 import { getSpecials } from '../../store/specials/action'
 
 
-export default function Special() {
+export default function Special({ changeLogin }) {
     const dispacth = useDispatch()
+    const history = useHistory()
     const { specials } = useSelector(store => {
         return store.specials
     })
     useEffect(() => {
-        dispacth(getSpecials())
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        } else {
+            dispacth(getSpecials())
+        }
     }, [])
+
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">

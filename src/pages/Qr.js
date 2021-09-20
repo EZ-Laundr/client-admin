@@ -4,10 +4,17 @@ import Sidebar from '../components/Sidebar'
 import QrReader from 'react-qr-reader'
 import '../index.css'
 import { useHistory } from 'react-router'
+import { useEffect } from 'react'
 
 
-export default function Qr() {
+export default function Qr({ changeLogin }) {
     const history = useHistory()
+
+    useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
+    })
 
     function handleError(err) {
         console.log(err)
@@ -17,10 +24,11 @@ export default function Qr() {
             history.push(res)
         }
     }
+
     return (
         <>
             <div className="flex">
-                <Sidebar />
+                <Sidebar changeLogin={changeLogin} />
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">

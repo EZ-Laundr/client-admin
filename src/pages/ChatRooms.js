@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useHistory } from 'react-router'
 import { StreamChat } from 'stream-chat'
 import {
     Chat, Channel, Window, ChannelHeader, MessageList, MessageInput, Thread
@@ -7,6 +8,8 @@ import {
 
 
 export default function ChatRooms() {
+    const history = useHistory()
+
     const idUser = 1
     const client = StreamChat.getInstance('4zhahvr4har5', 'qh2vyhx4ruu3sgkv3wws6v72jz82swbkjzxxurjwq7yd49r8xgbsxh2gqk74nkav')
     client.connectUser({
@@ -18,6 +21,13 @@ export default function ChatRooms() {
         name: 'Testing Channel',
         members: ['Customer 1', 'Customer 2'],
     });
+
+    useEffect(() => {
+        if (!localStorage.getItem('access_token')) {
+            history.push('/login')
+        }
+    })
+
 
     return (
         <>
