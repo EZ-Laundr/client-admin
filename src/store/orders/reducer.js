@@ -1,8 +1,9 @@
-import { GET_ORDERS, ONE_ORDER } from './actionType'
+import { GET_ORDERS, ONE_ORDER, LOADING_ORDER } from './actionType'
 
 const initialState = {
     orders: [],
-    oneOrder: {}
+    oneOrder: {},
+    isLoadingOrder: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -17,6 +18,12 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 oneOrder: action.payload
             }
+        case LOADING_ORDER: {
+            return {
+                ...state,
+                isLoadingOrder: action.payload
+            }
+        }
         default:
             return state
     }

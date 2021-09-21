@@ -5,6 +5,7 @@ import { deleteService, getServices, oneService } from '../store/services/action
 import Swal from 'sweetalert2'
 import { deletePerfume, getPerfumes, onePerfume } from '../store/perfumes/action'
 import { deleteSpecial, getSpecials, oneSpecial } from '../store/specials/action'
+import { formatPrice } from '../helpers/price'
 
 export default function TrMaster({ el, i, type }) {
     const history = useHistory()
@@ -74,7 +75,7 @@ export default function TrMaster({ el, i, type }) {
             <tr>
                 <th>{i + 1}</th>
                 <td>{el.name}</td>
-                <td>{el.price}</td>
+                <td>{formatPrice(el.price)}</td>
                 <td className="w-60">
                     <img src={el.imageUrl} alt={el.name} width="200" height="100" />
                 </td>

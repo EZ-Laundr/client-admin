@@ -13,15 +13,14 @@ export default function Sidebar({ changeLogin }) {
         <>
             <div className="flex-none flex-col md:flex md:flex-row md:min-h-screen bg-blueGray-50">
                 <div className="flex flex-col flex-shrink-0 w-full text-blueGray-700 bg-white shadow-xl md:w-64">
-                    <div className="flex flex-col items-center flex-shrink-0 py-4">
-                        <Link to="/" className="w-full px-8 focus:outline-none">
+                    <div className="flex flex-col items-center flex-shrink-0 mt-1">
+                        <Link to="/" className="w-full px-16 focus:outline-none">
                             <div className="inline-flex items-center">
-                                <div className="w-2 h-2 p-2 mr-2 rounded-full bg-gradient-to-tr from-blue-500 to-blue-600">
-                                </div>
-                                <h2 className="block p-2 text-xl font-medium tracking-tighter text-black transition duration-500 ease-in-out transform cursor-pointer hover:text-blueGray-500 lg:text-x lg:mr-8"> EZ Laundr </h2>
+                                <img src="https://i.ibb.co/mGH9RHc/logo-dashboard-removebg-preview.png" className="w-40" alt="logo-dashboard" border="0" />
                             </div>
                         </Link>
                     </div>
+                    <hr className="my-3" />
                     <nav className="flex-grow pb-4 pr-4 md:block md:pb-0 md:overflow-y-auto">
                         <ul>
                             <li>
