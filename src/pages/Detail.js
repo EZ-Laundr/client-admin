@@ -8,9 +8,19 @@ import Sidebar from '../components/Sidebar'
 import TableTreatmen from '../components/TableTreatmen'
 import '../index.css'
 import { oneOrder, sendWeight } from '../store/orders/action'
+import Map from '../components/Map'
+import {
+    Accordion,
+    AccordionItem,
+    AccordionItemHeading,
+    AccordionItemButton,
+    AccordionItemPanel
+} from 'react-accessible-accordion'
+
 
 
 export default function Detail({ changeLogin }) {
+
     const { id } = useParams()
     const history = useHistory()
     const dispacth = useDispatch()
@@ -27,6 +37,7 @@ export default function Detail({ changeLogin }) {
     const [weight, setWeight] = useState('')
     const [totalPrice, setTotalPrice] = useState('')
     const [priceService, setPriceService] = useState('')
+    const [visible, setVisible] = useState(false)
 
 
     useEffect(async () => {
@@ -71,6 +82,14 @@ export default function Detail({ changeLogin }) {
         }
     }
 
+    function openModal() {
+        setVisible(true)
+    }
+
+    function closeModal() {
+        setVisible(false)
+    }
+
 
     return (
         <>
@@ -100,13 +119,23 @@ export default function Detail({ changeLogin }) {
                                         </div>
                                         {
                                             pickUp && (
-                                                <div className="flex items-center justify-between border-t border-b border-gray-200 py-2 mb-2">
-                                                    <div className="text-gray-500 w-1/2">
-                                                        {cutomerAddress}
-                                                    </div>
-                                                </div>
+                                                <Accordion allowZeroExpanded>
+                                                    <AccordionItem>
+                                                        <AccordionItemHeading>
+                                                            <AccordionItemButton>
+                                                                <button className="p-2 bg-indigo-500 shadow-lg text-white text-lg title-font tracking-widest mb-4">
+                                                                    Check Map
+                                                                </button>
+                                                            </AccordionItemButton>
+                                                        </AccordionItemHeading>
+                                                        <AccordionItemPanel>
+                                                            <Map />
+                                                        </AccordionItemPanel>
+                                                    </AccordionItem>
+                                                </Accordion>
                                             )
                                         }
+
 
                                         <div className="text-lg title-font  tracking-widest mb-4">
                                             Special Treatments
@@ -137,6 +166,7 @@ export default function Detail({ changeLogin }) {
                                 </div>
                             </div>
                         </div>
+                        {/* test map */}
 
                     </div>
                     <Footer />

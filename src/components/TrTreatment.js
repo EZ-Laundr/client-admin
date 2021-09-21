@@ -1,11 +1,12 @@
 import '../index.css'
 
 export default function TrTreatment({ el, i }) {
+    console.log(el)
     return (
         <>
             <tr>
                 <th>{i + 1}</th>
-                <td>{el.name}</td>
+                <td>{el.SpecialTreatment.name}</td>
                 <td>{el.price}</td>
                 <td>{el.quantity}</td>
                 <td>
