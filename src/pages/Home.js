@@ -35,11 +35,17 @@ export default function Home({ isLogin, changeLogin }) {
                                         <img src="https://i.ibb.co/mGH9RHc/logo-dashboard-removebg-preview.png" className="animate-bounce w-40" alt="logo-dashboard" border="0" />
                                     </div>
                                 )
+                            } {
+                                !isLoadingOrder && (
+                                    <div>
+                                        <h1 className="animate__animated animate__fadeInUp sm:text-3xl text-2xl font-medium title-font mb-10 text-gray-900 flex justify-center">Customers</h1>
+                                        <div className="animate__animated animate__lightSpeedInLeft h-96 overflow-auto">
+                                            <TableOrder data={orders} />
+                                        </div>
+                                    </div>
+                                )
                             }
-                            <h1 class="animate__animated animate__fadeInUp sm:text-3xl text-2xl font-medium title-font mb-10 text-gray-900 flex justify-center">Customers</h1>
-                            <div className="animate__animated animate__slideInUp">
-                                <TableOrder data={orders} />
-                            </div>
+
                         </div>
                     </div>
                     <Footer />

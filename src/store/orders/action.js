@@ -49,11 +49,13 @@ export function getOrders() {
 
 export function getUsers() {
     return async function (dispacth) {
+        dispacth(setLoadingOrder(true))
         try {
             const { data } = await userApi({
                 method: "get",
             });
             dispacth(setUsers(data));
+            dispacth(setLoadingOrder(false))
             return data;
         } catch (err) {
             console.log(err);
@@ -63,12 +65,14 @@ export function getUsers() {
 
 export function oneOrder(id) {
     return async function (dispacth) {
+        dispacth(setLoadingOrder(true))
         try {
             const { data } = await orderApi({
                 method: "get",
                 url: `/${id}`,
             });
             dispacth(setOneOrder(data));
+            dispacth(setLoadingOrder(false))
             return data;
         } catch (err) {
             console.log(err);
