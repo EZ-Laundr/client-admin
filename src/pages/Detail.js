@@ -139,11 +139,20 @@ export default function Detail({ changeLogin }) {
                                                 <TableTreatmen data={orderSpecials} />
                                             )
                                         }
-                                    </div>
-                                    <hr />
-                                    <div className="flex mt-3">
-                                        <span className="title-font font-medium text-2xl text-gray-900">RP {totalPrice}</span>
-                                        <button onClick={processOrder} className="flex justfy-end text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Process</button>
+                                        <div className="flex border-gray-200 py-2 -mt-4">
+                                            {
+                                                order.weight === 0 ? (
+                                                    <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="input weight" class="input input-bordered w-full" />
+                                                ) : (
+                                                    <div className="text-lg title-font  tracking-widest mb-4">Weight: {order.weight} Kg</div>
+                                                )
+                                            }
+                                        </div>
+                                        <hr />
+                                        <div className="flex mt-3">
+                                            <span className="title-font font-medium text-2xl text-gray-900">RP {totalPrice}</span>
+                                            <button onClick={processOrder} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Process</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
