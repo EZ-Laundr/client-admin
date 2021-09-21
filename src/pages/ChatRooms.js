@@ -25,7 +25,7 @@ export default function ChatRooms() {
     const [userId, setUserId] = useState("0");
     const dummy = useRef();
     const test = firestore.collection("messages");
-    const messagesRef = test.doc(userId).collection("newCollection");
+    const messagesRef = test.doc(userId).collection("chat-history");
     const query = messagesRef.orderBy("createdAt").limit(25);
 
     const dispacth = useDispatch();
