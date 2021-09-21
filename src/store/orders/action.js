@@ -1,9 +1,16 @@
 import orderApi from '../../apis/order'
-import { GET_ORDERS, ONE_ORDER } from './actionType'
+import { GET_ORDERS, ONE_ORDER, LOADING_ORDER } from './actionType'
 
 function setOrders(payload) {
     return {
         type: GET_ORDERS,
+        payload
+    }
+}
+
+function setLoadingOrder(payload) {
+    return {
+        type: LOADING_ORDER,
         payload
     }
 }
@@ -17,12 +24,14 @@ function setOneOrder(payload) {
 
 export function getOrders() {
     return async function (dispacth) {
+        dispacth(setLoadingOrder(true))
         try {
             const { data } = await orderApi({
                 method: 'get'
             })
             console.log(data)
             dispacth(setOrders(data))
+            dispacth(setLoadingOrder(false))
             return data
         } catch (err) {
             console.log(err)

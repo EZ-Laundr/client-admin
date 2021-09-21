@@ -16,6 +16,7 @@ import {
     AccordionItemButton,
     AccordionItemPanel
 } from 'react-accessible-accordion'
+import { formatPrice } from '../helpers/price'
 
 export default function Detail({ changeLogin }) {
 
@@ -31,33 +32,33 @@ export default function Detail({ changeLogin }) {
     const [perfume, setPerfume] = useState('')
     const [pickUp, setPickUp] = useState('')
     const [orderSpecials, setOrderSpecials] = useState([])
-    const [cutomerAddress, setCutomerAddress] = useState('')
     const [weight, setWeight] = useState('')
     const [totalPrice, setTotalPrice] = useState('')
     const [priceService, setPriceService] = useState('')
     const [perfumePrice, setPerfumePrice] = useState('')
-    const [visible, setVisible] = useState(false)
 
-
-    useEffect(async () => {
+    async function fetchDetail() {
         try {
-            if (localStorage.getItem('access_token')) {
-                const result = await dispacth(oneOrder(id))
-                setEmail(result?.User.email)
-                setStatus(result?.status)
-                setService(result?.Service.name)
-                setPickUp(result?.pickUp)
-                setOrderSpecials(result?.OrderSpecials)
-                setCutomerAddress(result?.cutomerAddress)
-                setPriceService(result?.Service.price)
-                setPerfume(result?.Perfume.name)
-                setPerfumePrice(result?.Perfume.price)
-                setTotalPrice(result?.totalPrice)
-            } else {
-                history.push('/login')
-            }
+            const result = await dispacth(oneOrder(id))
+            setEmail(result?.User.email)
+            setStatus(result?.status)
+            setService(result?.Service.name)
+            setPickUp(result?.pickup)
+            setOrderSpecials(result?.OrderSpecials)
+            setPriceService(result?.Service.price)
+            setPerfume(result?.Perfume.name)
+            setPerfumePrice(result?.Perfume.price)
+            setTotalPrice(result?.totalPrice)
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token')) {
+            fetchDetail()
+        } else {
+            history.push('/login')
         }
     }, [])
 
@@ -75,7 +76,7 @@ export default function Detail({ changeLogin }) {
                 data: { weight }
             })
             if (result) {
-                history.push('/')
+                fetchDetail()
             }
         } catch (err) {
             console.log(err)
@@ -149,9 +150,14 @@ export default function Detail({ changeLogin }) {
                                             }
                                         </div>
                                         <hr />
-                                        <div className="flex mt-3">
-                                            <span className="title-font font-medium text-2xl text-gray-900">RP {totalPrice}</span>
-                                            <button onClick={processOrder} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Process</button>
+                                        <div className="flex mt-3 justify-between">
+                                            <span className="title-font font-medium text-2xl text-gray-900">{formatPrice(totalPrice)}</span>
+                                            <div className="flex space-x-3">
+                                                {
+                                                    order.weight === 0 && <button onClick={processOrder} className="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Process</button>
+                                                }
+                                                <button onClick={() => history.push('/')} className="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Back</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
