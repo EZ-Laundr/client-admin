@@ -17,8 +17,6 @@ import {
     AccordionItemPanel
 } from 'react-accessible-accordion'
 
-
-
 export default function Detail({ changeLogin }) {
 
     const { id } = useParams()
@@ -141,7 +139,6 @@ export default function Detail({ changeLogin }) {
                                                 <TableTreatmen data={orderSpecials} />
                                             )
                                         }
-
                                     </div>
                                     <hr />
                                     <div className="flex mt-3">
@@ -152,7 +149,6 @@ export default function Detail({ changeLogin }) {
                             </div>
                         </div>
                     </div>
-
                     <Footer />
                 </div >
             </div >
