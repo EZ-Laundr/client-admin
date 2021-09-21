@@ -1,8 +1,8 @@
-import '../index.css'
+import "../index.css";
 
 export default function TrTreatment({ el, i }) {
-    console.log(el)
-    return (
+  
+return (
         <>
             <tr>
                 <th>{i + 1}</th>
@@ -16,3 +16,4 @@ export default function TrTreatment({ el, i }) {
         </>
     )
 }
+
