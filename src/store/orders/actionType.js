@@ -2,7 +2,7 @@ const actionType = {
     GET_ORDERS: 'GET_ORDERS',
     ONE_ORDER: 'ONE_ORDER',
     LOADING_ORDER: 'LOADING_ORDER',
-    GET_USERS: 'GET_USERS'
+    GET_USERS: 'GET_USERS',
 }
 
 export const GET_ORDERS = actionType.GET_ORDERS

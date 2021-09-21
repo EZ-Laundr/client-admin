@@ -5,7 +5,7 @@ export default function TableOrder({ data }) {
     return (
         <>
             <div className="overflow-x-auto">
-                <table className="table w-full table-zebra">
+                <table className="table w-full table-zebra ">
                     <thead>
                         <tr>
                             <th>No</th>

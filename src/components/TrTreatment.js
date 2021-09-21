@@ -9,7 +9,7 @@ export default function TrTreatment({ el, i }) {
 				<td>{el.SpecialTreatment.name}</td>
 				<td>{formatPrice(el.SpecialTreatment.price)}</td>
 				<td>{el.quantity}</td>
-				<td>{el.price}</td>
+				<td>{formatPrice(el.price)}</td>
 			</tr>
 		</>
 	);
