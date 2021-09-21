@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const url = "http://localhost:4000/admin/users";
+const url = "http://d81d-116-206-39-107.ngrok.io/admin/users";
 const token = localStorage.getItem("access_token");
 const userApi = axios.create({
-    baseURL: url,
-    headers: {
-        access_token: token,
-    },
+	baseURL: url,
+	headers: {
+		access_token: token,
+	},
 });
 
 export default userApi;
