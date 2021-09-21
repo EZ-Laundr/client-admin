@@ -31,7 +31,7 @@ export default function Sidebar({ changeLogin }) {
                             </li>
                             <li>
                                 <Link to={{ pathname: '/services' }} className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
-                                    <i class="fa-lg fas fa-hand-sparkles"></i>
+                                    <i class="fas fa-hand-sparkles fa-lg"></i>
                                     <span className="ml-4">Services</span>
                                 </Link>
                             </li>
@@ -51,6 +51,12 @@ export default function Sidebar({ changeLogin }) {
                                 <Link to="/qr" className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
                                     <i class="fas fa-qrcode fa-lg"></i>
                                     <span className="ml-4">Scan QR Code</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/chat" className="w-full inline-flex items-center px-4 py-2 mt-2 text-base text-blueGray-500 transition duration-500 ease-in-out transform border-l-4 border-white hover:border-blue-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:text-blue-600">
+                                    <i class="far fa-comments fa-lg"></i>
+                                    <span className="ml-4">Customer Chatting</span>
                                 </Link>
                             </li>
                             <li>
