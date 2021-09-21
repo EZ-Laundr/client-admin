@@ -3,6 +3,7 @@ import { useHistory } from 'react-router'
 import orderApi from '../apis/order'
 import '../index.css'
 import { getOrders, oneOrder } from '../store/orders/action'
+import 'animate.css'
 
 export default function TrOrder({ el, i }) {
     const history = useHistory()
@@ -40,7 +41,7 @@ export default function TrOrder({ el, i }) {
                 <td>{el.id}</td>
                 <td>{el.User.email}</td>
                 <td>{el.Service.name}</td>
-                <td>
+                <td className="animate__animated animate__zoomIn ">
                     <div className={
                         el.status === 'pending' ? ' badge badge-warning badge-lg' : el.status === 'On Progress' ? ' badge badge-info badge-lg' : ' badge badge-success badge-lg'
                     }>
