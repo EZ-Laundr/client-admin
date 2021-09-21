@@ -1,93 +1,93 @@
-import orderApi from '../../apis/order'
-import userApi from '../../apis/user'
-import { GET_ORDERS, ONE_ORDER, LOADING_ORDER, GET_USERS } from './actionType'
+import orderApi from "../../apis/order";
+import userApi from "../../apis/user";
+import { GET_ORDERS, ONE_ORDER, LOADING_ORDER, GET_USERS } from "./actionType";
 
 function setOrders(payload) {
     return {
         type: GET_ORDERS,
-        payload
-    }
+        payload,
+    };
 }
 
 function setUsers(payload) {
     return {
         type: GET_USERS,
-        payload
-    }
+        payload,
+    };
 }
 
 function setLoadingOrder(payload) {
     return {
         type: LOADING_ORDER,
-        payload
-    }
+        payload,
+    };
 }
 
 function setOneOrder(payload) {
     return {
         type: ONE_ORDER,
-        payload
-    }
+        payload,
+    };
 }
 
 export function getOrders() {
     return async function (dispacth) {
-        dispacth(setLoadingOrder(true))
+        dispacth(setLoadingOrder(true));
         try {
             const { data } = await orderApi({
-                method: 'get'
-            })
-            console.log(data)
-            dispacth(setOrders(data))
-            dispacth(setLoadingOrder(false))
-            return data
+                method: "get",
+            });
+            console.log(data);
+            dispacth(setOrders(data));
+            dispacth(setLoadingOrder(false));
+            return data;
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }
+    };
 }
 
 export function getUsers() {
     return async function (dispacth) {
         try {
             const { data } = await userApi({
-                method: 'get'
-            })
-            dispacth(setUsers(data))
-            return data
+                method: "get",
+            });
+            dispacth(setUsers(data));
+            return data;
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }
+    };
 }
 
 export function oneOrder(id) {
     return async function (dispacth) {
         try {
             const { data } = await orderApi({
-                method: 'get',
-                url: `/${id}`
-            })
-            dispacth(setOneOrder(data))
-            return data
+                method: "get",
+                url: `/${id}`,
+            });
+            dispacth(setOneOrder(data));
+            return data;
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }
+    };
 }
 
 export function sendWeight(weight) {
     return async function () {
         try {
             const result = await orderApi({
-                method: 'put',
+                method: "put",
                 data: {
-                    weight
-                }
-            })
-            console.log(result)
+                    weight,
+                },
+            });
+            console.log(result);
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }
+    };
 }

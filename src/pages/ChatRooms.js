@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../store/orders/action";
+import { getUsers } from "../store/orders/action";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -27,19 +27,21 @@ export default function ChatRooms() {
     const test = firestore.collection("messages");
     const messagesRef = test.doc(userId).collection("newCollection");
     const query = messagesRef.orderBy("createdAt").limit(25);
-    const { orders } = useSelector((store) => {
+
+    const dispacth = useDispatch();
+
+    useEffect(() => {
+        dispacth(getUsers());
+    }, []);
+
+    const { users } = useSelector((store) => {
         return store.orders;
     });
-    const dispacth = useDispatch();
-    useEffect(() => {
-        dispacth(getOrders());
-    }, []);
 
     const [messages] = useCollectionData(query, { idField: "id" });
 
     const sendMessage = async (e) => {
         e.preventDefault();
-
         await messagesRef.add({
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -49,7 +51,6 @@ export default function ChatRooms() {
         dummy.current.scrollIntoView({ behavior: "smooth" });
     };
 
-    console.log(orders, "ini orders");
     if (userId !== "0") {
         return (
             <div class=" mt-5 ml-3 mr-3">
@@ -57,6 +58,7 @@ export default function ChatRooms() {
                     onClick={() => {
                         setUserId("0");
                     }}
+                    className="btn"
                 >
                     Back
                 </button>
@@ -98,14 +100,30 @@ export default function ChatRooms() {
         );
     } else {
         return (
-            <div>
-                <button
-                    onClick={() => {
-                        setUserId("2");
-                    }}
-                >
-                    Start chatting
-                </button>
+            <div className="mt-5 ml-5">
+                {users.map((user) => {
+                    if (user.role !== "admin") {
+                        return (
+                            <div>
+                                <p>
+                                    User: {user.role}-{user.id}
+                                </p>
+                                <p>Email: {user.email}</p>
+                                <div>
+                                    <button
+                                        className="btn btn-primary "
+                                        onClick={() => {
+                                            setUserId(user.id.toString());
+                                            console.log(user.id.toString());
+                                        }}
+                                    >
+                                        Start chatting
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    }
+                })}
             </div>
         );
     }
@@ -116,7 +134,7 @@ function ChatMessage(props) {
 
     return (
         <div>
-            <h1>{sender}</h1>
+            <h1 className="font-black">{sender}</h1>
             <div>
                 <p>{text}</p>
             </div>
