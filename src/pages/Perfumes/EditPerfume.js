@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import '../../index.css'
 import { onePerfume, updatePerfume } from '../../store/perfumes/action'
+import ReactLoading from 'react-loading'
 
 
 export default function EditPerfume({ isLogin, changeLogin }) {
@@ -18,6 +19,7 @@ export default function EditPerfume({ isLogin, changeLogin }) {
     const [name, setName] = useState(perfume.name)
     const [price, setPrice] = useState(perfume.price)
     const [imageUrl, setImageUrl] = useState(perfume.imageUrl)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (!localStorage.getItem('access_token')) {
@@ -41,8 +43,10 @@ export default function EditPerfume({ isLogin, changeLogin }) {
             const payload = {
                 id, name, price, imageUrl
             }
+            setLoading(true)
             const result = await dispacth(updatePerfume(payload))
             if (result) {
+                setLoading(false)
                 history.push('/perfumes')
             }
         } catch (err) {
@@ -94,7 +98,13 @@ export default function EditPerfume({ isLogin, changeLogin }) {
                                             </div>
                                         </div>
                                         <div class="p-2 w-full">
-                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={edit}>Edit Perfume</button>
+                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={edit}>
+                                                {
+                                                    loading ? (
+                                                        <ReactLoading type={'bars'} color={'white'} height={20} width={20} />
+                                                    ) : 'Edit Perfume'
+                                                }
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

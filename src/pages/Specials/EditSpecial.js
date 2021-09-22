@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import '../../index.css'
 import { oneSpecial, updateSpecial } from '../../store/specials/action'
+import ReactLoading from 'react-loading'
 
 
 export default function EditSpecial({ changeLogin }) {
@@ -18,6 +19,7 @@ export default function EditSpecial({ changeLogin }) {
     const [name, setName] = useState(special.name)
     const [price, setPrice] = useState(special.price)
     const [imageUrl, setImageUrl] = useState(special.imageUrl)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (!localStorage.getItem('access_token')) {
@@ -37,8 +39,10 @@ export default function EditSpecial({ changeLogin }) {
             const payload = {
                 name, price, imageUrl, id
             }
+            setLoading(true)
             const result = await dispacth(updateSpecial(payload))
             if (result) {
+                setLoading(false)
                 history.push('/specials')
             }
         } catch (err) {
@@ -88,7 +92,13 @@ export default function EditSpecial({ changeLogin }) {
                                             </div>
                                         </div>
                                         <div class="p-2 w-full">
-                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={edit}>Edit Special Treatment</button>
+                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={edit}>
+                                                {
+                                                    loading ? (
+                                                        <ReactLoading type={'bars'} color={'white'} height={20} width={20} />
+                                                    ) : 'Edit Special Treatment'
+                                                }
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

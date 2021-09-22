@@ -6,23 +6,32 @@ import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import '../../index.css'
 import { addPerfume } from '../../store/perfumes/action'
+import ReactLoading from 'react-loading'
 
 
 export default function AddPerfume({ changeLogin }) {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [imageUrl, setImageUrl] = useState('')
+    const [loading, setLoading] = useState(false)
     const dispacth = useDispatch()
     const history = useHistory()
 
     async function add() {
-        const payload = {
-            name, price, imageUrl
+        try {
+            const payload = {
+                name, price, imageUrl
+            }
+            setLoading(true)
+            const result = await dispacth(addPerfume(payload))
+            if (result) {
+                setLoading(false)
+                history.push('/perfumes')
+            }
+        } catch (err) {
+            console.log(err)
         }
-        const result = await dispacth(addPerfume(payload))
-        if (result) {
-            history.push('/perfumes')
-        }
+
     }
 
     useEffect(() => {
@@ -70,7 +79,13 @@ export default function AddPerfume({ changeLogin }) {
                                             </div>
                                         </div>
                                         <div class="p-2 w-full">
-                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={add}>Add Perfume</button>
+                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={add}>
+                                                {
+                                                    loading ? (
+                                                        <ReactLoading type={'bars'} color={'white'} height={20} width={20} />
+                                                    ) : 'Add Perfume'
+                                                }
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

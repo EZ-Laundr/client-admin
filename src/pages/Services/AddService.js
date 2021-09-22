@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import '../../index.css'
 import { addServices } from '../../store/services/action'
+import ReactLoading from 'react-loading'
 
 
 export default function AddService({ changeLogin }) {
@@ -14,15 +15,17 @@ export default function AddService({ changeLogin }) {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [imageUrl, setImageUrl] = useState('')
+    const [loading, setLoading] = useState(false)
 
     async function add() {
         const payload = {
             name, price, imageUrl
         }
         try {
+            setLoading(true)
             const result = await dispacth(addServices(payload))
             if (result) {
-                console.log(result)
+                setLoading(false)
                 history.push('/services')
             }
         } catch (err) {
@@ -75,8 +78,13 @@ export default function AddService({ changeLogin }) {
                                             </div>
                                         </div>
                                         <div className="p-2 w-full">
-                                            <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-                                                onClick={add}>Add Service</button>
+                                            <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={add}>
+                                                {
+                                                    loading ? (
+                                                        <ReactLoading type={'bars'} color={'white'} height={20} width={20} />
+                                                    ) : 'Add Service'
+                                                }
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

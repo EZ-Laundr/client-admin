@@ -75,7 +75,7 @@ export default function ChatRooms({ changeLogin }) {
                             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
                                 Chat
                             </h1>
-                            <div class="flex">
+                            <div class="flex items-center h-96">
                                 <div class="flex-none w-1/3 h-96">
                                     <div className="border-b-2 text-2xl p-4">
                                         Customers
@@ -124,13 +124,10 @@ export default function ChatRooms({ changeLogin }) {
                                 <div class="flex-grow h-96 ml-16">
                                     {startChat ? (
                                         <div>
-                                            <div className="border-b-2 h-16">
+                                            <div className="flex items-center border-b-2 h-16">
                                                 <h1 className="text-xl font-bold">
                                                     {emailCustomer}
                                                 </h1>
-                                                <span className="text-gray-400 ">
-                                                    Online
-                                                </span>
                                             </div>
                                             <div className="flex flex-col justify-end">
                                                 <div className=" h-64 overflow-auto ">

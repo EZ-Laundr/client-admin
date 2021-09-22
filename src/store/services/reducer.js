@@ -1,8 +1,9 @@
-import { GET_SERVICES, ONE_SERVICE } from './actionType'
+import { GET_SERVICES, ONE_SERVICE, LOADING_SERVICE } from './actionType'
 
 const initialState = {
     services: [],
-    oneService: {}
+    oneService: {},
+    isLoadingService: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -17,7 +18,11 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 oneService: action.payload
             }
-
+        case LOADING_SERVICE:
+            return {
+                ...state,
+                isLoadingService: action.payload
+            }
         default:
             return state
     }

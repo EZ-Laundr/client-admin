@@ -1,5 +1,5 @@
 import servicesApi from '../../apis/services'
-import { GET_SERVICES, ONE_SERVICE } from './actionType'
+import { GET_SERVICES, ONE_SERVICE, LOADING_SERVICE } from './actionType'
 
 function setServices(payload) {
     return {
@@ -15,8 +15,16 @@ function setOneService(payload) {
     }
 }
 
+function setLoadingService(payload) {
+    return {
+        type: LOADING_SERVICE,
+        payload
+    }
+}
+
 export function getServices() {
     return async function (dispacth) {
+        dispacth(setLoadingService(true))
         try {
             const { data } = await servicesApi({
                 method: 'get'
@@ -24,14 +32,17 @@ export function getServices() {
             dispacth(setServices(data))
         } catch (err) {
             console.log(err)
+        } finally {
+            dispacth(setLoadingService(false))
         }
     }
 }
 
 export function addServices(payload) {
-    return async function () {
-        const { name, price, imageUrl } = payload
+    return async function (dispacth) {
         try {
+            dispacth(setLoadingService(true))
+            const { name, price, imageUrl } = payload
             return await servicesApi({
                 method: 'post',
                 data: {
@@ -40,6 +51,8 @@ export function addServices(payload) {
             })
         } catch (err) {
             console.log(err)
+        } finally {
+            dispacth(setLoadingService(false))
         }
     }
 }
