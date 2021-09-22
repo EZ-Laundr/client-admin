@@ -53,15 +53,17 @@ export default function Detail({ changeLogin }) {
             setPerfume(result?.Perfume.name)
             setPerfumePrice(result?.Perfume.price)
             setTotalPrice(result?.totalPrice)
-            if (pickUp) {
-                const { latitude, longitude } = JSON.parse(result.customerAddress)
-                setLatCustomer(latitude)
-                setLongCustomer(longitude)
-            }
         } catch (err) {
             console.log(err)
         }
     }
+
+    useEffect(() => {
+        const changeTextAddress = JSON.parse(order.customerAddress)
+        const { latitude, longitude } = changeTextAddress
+        setLatCustomer(latitude)
+        setLongCustomer(longitude)
+    }, [])
 
     useEffect(() => {
         if (localStorage.getItem('access_token')) {
@@ -164,7 +166,7 @@ export default function Detail({ changeLogin }) {
                                                                         </AccordionItemButton>
                                                                     </AccordionItemHeading>
                                                                     <AccordionItemPanel>
-                                                                        <Map />
+                                                                        <Map customerLat={latCustomer} customerLong={longCustomer} />
                                                                     </AccordionItemPanel>
                                                                 </AccordionItem>
                                                             </Accordion>

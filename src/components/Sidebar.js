@@ -1,6 +1,6 @@
 import '../index.css'
 import { Link, useHistory } from 'react-router-dom'
-import logo from '../images/logo4.png'
+import logo from '../images/logo5.png'
 
 export default function Sidebar({ changeLogin }) {
     const history = useHistory()
@@ -15,10 +15,10 @@ export default function Sidebar({ changeLogin }) {
             <div className="flex-none flex-col md:flex md:flex-row md:min-h-screen bg-blueGray-50">
                 <div className="flex flex-col flex-shrink-0 w-full text-blueGray-700 bg-white shadow-xl md:w-64">
                     <div className="flex flex-col items-center flex-shrink-0 mt-1">
-                        <Link to="/" className="w-full px-5 py-2 focus:outline-none">
+                        <Link to="/" className="w-full px-10 py-2 focus:outline-none">
                             <div className="flex items-center">
                                 <img src={logo} className=" h-11" alt="logo-dashboard" border="0" />
-                                <div className="ml-2 text-xl font-bold tracking-widest">EZ Laundr</div>
+                                <div className="ml-4 text-xl font-bold tracking-widest">EZ Laundr</div>
                             </div>
                         </Link>
                     </div>

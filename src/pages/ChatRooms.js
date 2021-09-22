@@ -47,8 +47,7 @@ export default function ChatRooms({ changeLogin }) {
 
     const [messages] = useCollectionData(query, { idField: "id" });
 
-    const sendMessage = async (e) => {
-        e.preventDefault();
+    const sendMessage = async () => {
         await messagesRef.add({
             text: text,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -57,6 +56,7 @@ export default function ChatRooms({ changeLogin }) {
                 _id: 2,
                 user: "Admin",
                 name: "Admin",
+                avatar: "https://ik.imagekit.io/waknkqe0dx5v/Screen_Shot_2021-09-22_at_3.28.14_PM_8wSR6gNT_4H.png?updatedAt=1632299792115",
             },
         });
         setText("");
@@ -73,15 +73,12 @@ export default function ChatRooms({ changeLogin }) {
                         <div className="container px-5 py-9 mx-auto">
 
                             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-                                Customer Chat
+                                Chat
                             </h1>
                             <div class="flex">
                                 <div class="flex-none w-1/3 h-96">
-                                    <div className="border-b-2">
-                                        <input
-                                            className="w-full p-5 focus:outline-none"
-                                            placeholder="search"
-                                        />
+                                    <div className="border-b-2 text-2xl p-4">
+                                        Customers
                                     </div>
                                     <div className="mt-2 h-96 overflow-auto">
                                         {isLoadingOrder ? (
@@ -196,6 +193,11 @@ export default function ChatRooms({ changeLogin }) {
                                                             )
                                                         }
                                                         className="p-2 w-full focus:outline-none"
+                                                        onKeyUp={(e) => {
+                                                            if (e.which === 13) {
+                                                                sendMessage()
+                                                            }
+                                                        }}
                                                         placeholder="type your message..."
                                                     />
                                                     <button
