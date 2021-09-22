@@ -1,5 +1,5 @@
 import loginApi from '../../apis/login'
-import { GET_USER } from './actionType'
+import { GET_USER, LOADING_LOGIN } from './actionType'
 
 function setUser(payload) {
     return {
@@ -8,11 +8,18 @@ function setUser(payload) {
     }
 }
 
+function setIsLoadingLogin(payload) {
+    return {
+        type: LOADING_LOGIN,
+        payload
+    }
+}
+
 
 export function getUser(payload) {
     return async function (dispacth) {
         const { email, password } = payload
-        console.log(email, password)
+        dispacth(setIsLoadingLogin(true))
         try {
             const { data } = await loginApi({
                 method: 'post',
@@ -21,7 +28,9 @@ export function getUser(payload) {
             dispacth(setUser(data))
             return data
         } catch (err) {
-            console.log(err)
+            return err
+        } finally {
+            dispacth(setIsLoadingLogin(false))
         }
     }
 }

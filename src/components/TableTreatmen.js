@@ -10,9 +10,9 @@ export default function TableTreatmen({ data }) {
                         <tr>
                             <th>No</th>
                             <th>Name</th>
-                            <th>Price Per Item</th>
+                            <th>Per Item</th>
                             <th>Quantity</th>
-                            <th>Total Price</th>
+                            <th>Total Treatments</th>
                         </tr>
                     </thead>
                     <tbody>
