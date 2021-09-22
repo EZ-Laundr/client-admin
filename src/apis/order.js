@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = 'http://d81d-116-206-39-107.ngrok.io/admin/orders'
+const url = 'http://bf5c-116-206-43-75.ngrok.io/admin/orders'
 const token = localStorage.getItem('access_token')
 const orderApi = axios.create({
     baseURL: url,
