@@ -1,7 +1,10 @@
 import axios from "axios";
 
-const url = "http://192.168.1.12:4000/admin/perfumes";
-const token = localStorage.getItem("access_token");
+
+// const url = 'http://fdc5-116-206-42-95.ngrok.io/admin/perfumes'
+const url = 'http://localhost:4000/admin/perfumes'
+const token = localStorage.getItem('access_token')
+
 const perfumeApi = axios.create({
     baseURL: url,
     headers: {

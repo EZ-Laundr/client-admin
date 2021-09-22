@@ -77,7 +77,7 @@ export default function TrMaster({ el, i, type }) {
                 <td>{el.name}</td>
                 <td>{formatPrice(el.price)}</td>
                 <td className="w-60">
-                    <img src={el.imageUrl} alt={el.name} width="200" height="100" />
+                    <img src={el.imageUrl} alt={el.name} width="100" height="100" />
                 </td>
                 <td className="">
                     <button onClick={edit} className="p-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-yellow-500"><i className="fa-lg far fa-edit"></i></button>

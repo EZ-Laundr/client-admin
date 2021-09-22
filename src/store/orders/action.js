@@ -37,7 +37,6 @@ export function getOrders() {
             const { data } = await orderApi({
                 method: "get",
             });
-            console.log(data);
             dispacth(setOrders(data));
             dispacth(setLoadingOrder(false));
             return data;

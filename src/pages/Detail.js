@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import TableTreatmen from '../components/TableTreatmen'
 import '../index.css'
-import { oneOrder, sendWeight } from '../store/orders/action'
+import { oneOrder } from '../store/orders/action'
 import Map from '../components/Map'
 import {
     Accordion,
@@ -17,6 +17,7 @@ import {
     AccordionItemPanel
 } from 'react-accessible-accordion'
 import { formatPrice } from '../helpers/price'
+import Swal from 'sweetalert2'
 
 export default function Detail({ changeLogin }) {
 
@@ -26,6 +27,8 @@ export default function Detail({ changeLogin }) {
     const { oneOrder: order, isLoadingOrder } = useSelector(store => {
         return store.orders
     })
+    const [latCustomer, setLatCustomer] = useState('')
+    const [longCustomer, setLongCustomer] = useState('')
     const [email, setEmail] = useState('')
     const [status, setStatus] = useState('')
     const [service, setService] = useState('')
@@ -36,6 +39,7 @@ export default function Detail({ changeLogin }) {
     const [totalPrice, setTotalPrice] = useState('')
     const [priceService, setPriceService] = useState('')
     const [perfumePrice, setPerfumePrice] = useState('')
+    const [loading, setLoading] = useState(false)
 
     async function fetchDetail() {
         try {
@@ -49,6 +53,11 @@ export default function Detail({ changeLogin }) {
             setPerfume(result?.Perfume.name)
             setPerfumePrice(result?.Perfume.price)
             setTotalPrice(result?.totalPrice)
+            if (pickUp) {
+                const { latitude, longitude } = JSON.parse(result.customerAddress)
+                setLatCustomer(latitude)
+                setLongCustomer(longitude)
+            }
         } catch (err) {
             console.log(err)
         }
@@ -70,14 +79,41 @@ export default function Detail({ changeLogin }) {
 
     async function processOrder() {
         try {
-            const result = await orderApi({
-                method: 'put',
-                url: `/${order.id}`,
-                data: { weight }
+            const { isConfirmed } = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to process it ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, process it!'
             })
-            if (result) {
-                fetchDetail()
+            if (isConfirmed) {
+                if (weight === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Weight cannot be empty!',
+                    })
+                } else {
+                    setLoading(true)
+                    const result = await orderApi({
+                        method: 'put',
+                        url: `/${order.id}`,
+                        data: { weight }
+                    })
+                    if (result) {
+                        setLoading(false)
+                        Swal.fire(
+                            'Success!',
+                            'This order has been process',
+                            'success'
+                        )
+                        fetchDetail()
+                    }
+                }
             }
+
         } catch (err) {
             console.log(err)
         }
@@ -161,7 +197,7 @@ export default function Detail({ changeLogin }) {
                                                         <span className="title-font font-medium text-2xl text-gray-900">{formatPrice(totalPrice)}</span>
                                                         <div className="flex space-x-3">
                                                             {
-                                                                order.weight === 0 && <button onClick={processOrder} className="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Process</button>
+                                                                order.weight === 0 && <button onClick={processOrder} className={loading ? 'flex btn btn-primary loading' : 'flex btn btn-primary'}>Process</button>
                                                             }
                                                             <button onClick={() => history.push('/')} className="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Back</button>
                                                         </div>

@@ -71,6 +71,7 @@ export default function ChatRooms({ changeLogin }) {
                     <Navbar />
                     <div className="flex-grow min-h-16">
                         <div className="container px-5 py-9 mx-auto">
+
                             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
                                 Customer Chat
                             </h1>
