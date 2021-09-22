@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://d81d-116-206-39-107.ngrok.io/admin/users";
+const url = "http://192.168.1.12:4000/admin/users";
 const token = localStorage.getItem("access_token");
 const userApi = axios.create({
     baseURL: url,
