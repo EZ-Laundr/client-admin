@@ -1,5 +1,5 @@
 import specialApi from '../../apis/special'
-import { GET_SPECIALS, ONE_SPECIAL } from './actionType'
+import { GET_SPECIALS, ONE_SPECIAL, LOADING_SPECIAL } from './actionType'
 
 function setSpecials(payload) {
     return {
@@ -15,9 +15,17 @@ function setOneSpecial(payload) {
     }
 }
 
+function setLoadingSpecial(payload) {
+    return {
+        type: LOADING_SPECIAL,
+        payload
+    }
+}
+
 export function getSpecials() {
     return async function (dispacth) {
         try {
+            dispacth(setLoadingSpecial(true))
             const { data } = await specialApi({
                 method: 'get'
             })
@@ -25,6 +33,8 @@ export function getSpecials() {
             return data
         } catch (err) {
             console.log(err)
+        } finally {
+            dispacth(setLoadingSpecial(false))
         }
     }
 }

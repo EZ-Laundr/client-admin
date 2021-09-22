@@ -13,7 +13,7 @@ export default function Service({ changeLogin }) {
     const history = useHistory()
 
     const dispacth = useDispatch()
-    const { services } = useSelector(store => {
+    const { services, isLoadingService } = useSelector(store => {
         return store.services
     })
     useEffect(() => {
@@ -31,9 +31,20 @@ export default function Service({ changeLogin }) {
                 <div className="flex-grow flex flex-col">
                     <Navbar />
                     <div className=" flex-grow min-h-16">
-                        <div className="container px-5 py-10 mx-auto">
-                            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-10 text-gray-900 flex justify-center">Services</h1>
-                            <TableMaster data={services} type="services" />
+                        <div className="container px-5 py-8 mx-auto">
+                            {
+                                isLoadingService ? (
+                                    <div className="flex justify-center items-center h-96">
+                                        <img src="https://i.ibb.co/mGH9RHc/logo-dashboard-removebg-preview.png" className="animate-bounce w-40" alt="logo-dashboard" border="0" />
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <h1 class="sm:text-3xl text-2xl font-medium title-font  text-gray-900 flex justify-center">Services</h1>
+                                        <TableMaster data={services} type="services" />
+                                    </div>
+                                )
+                            }
+
                         </div>
                     </div>
                     <Footer />

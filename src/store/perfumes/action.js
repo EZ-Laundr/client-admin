@@ -1,5 +1,5 @@
 import perfumeApi from '../../apis/perfume'
-import { GET_PERFUMES, ONE_PERFUME } from './actionType'
+import { GET_PERFUMES, ONE_PERFUME, LOADING_PERFUME } from './actionType'
 
 
 function setPerfumes(payload) {
@@ -16,8 +16,16 @@ function setOnePerfume(payload) {
     }
 }
 
+function setLoadingPerfume(payload) {
+    return {
+        type: LOADING_PERFUME,
+        payload
+    }
+}
+
 export function getPerfumes() {
     return async function (dispacth) {
+        dispacth(setLoadingPerfume(true))
         try {
             const { data } = await perfumeApi({
                 method: 'get'
@@ -25,6 +33,8 @@ export function getPerfumes() {
             dispacth(setPerfumes(data))
         } catch (err) {
             console.log(err)
+        } finally {
+            dispacth(setLoadingPerfume(false))
         }
     }
 }

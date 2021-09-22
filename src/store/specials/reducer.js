@@ -1,8 +1,9 @@
-import { GET_SPECIALS, ONE_SPECIAL } from './actionType'
+import { GET_SPECIALS, ONE_SPECIAL, LOADING_SPECIAL } from './actionType'
 
 const initialState = {
     specials: [],
-    oneSpecial: {}
+    oneSpecial: {},
+    isLoadingSpecial: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -16,6 +17,11 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 oneSpecial: action.payload
+            }
+        case LOADING_SPECIAL:
+            return {
+                ...state,
+                isLoadingSpecial: action.payload
             }
         default:
             return state

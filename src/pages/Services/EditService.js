@@ -7,6 +7,7 @@ import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import '../../index.css'
 import { oneService, updateService } from '../../store/services/action'
+import ReactLoading from 'react-loading'
 
 
 export default function EditService({ changeLogin }) {
@@ -14,11 +15,13 @@ export default function EditService({ changeLogin }) {
     const { oneService: service } = useSelector(store => {
         return store.services
     })
+
     const dispacth = useDispatch()
     const history = useHistory()
     const [name, setName] = useState(service.name)
     const [price, setPrice] = useState(service.price)
     const [imageUrl, setImageUrl] = useState(service.imageUrl)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (!localStorage.getItem('access_token')) {
@@ -38,13 +41,20 @@ export default function EditService({ changeLogin }) {
     }, [])
 
     async function update() {
-        const payload = {
-            id, name, price, imageUrl
+        try {
+            const payload = {
+                id, name, price, imageUrl
+            }
+            setLoading(true)
+            const result = await dispacth(updateService(payload))
+            if (result) {
+                setLoading(false)
+                history.push('/services')
+            }
+        } catch (err) {
+            console.log(err)
         }
-        const result = await dispacth(updateService(payload))
-        if (result) {
-            history.push('/services')
-        }
+
     }
 
 
@@ -90,7 +100,13 @@ export default function EditService({ changeLogin }) {
                                         </div>
                                         <div class="p-2 w-full">
                                             <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={update}
-                                            >Edit Service</button>
+                                            >
+                                                {
+                                                    loading ? (
+                                                        <ReactLoading type={'bars'} color={'white'} height={20} width={20} />
+                                                    ) : 'Edit Service'
+                                                }
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

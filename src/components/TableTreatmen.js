@@ -4,7 +4,7 @@ import TrTreatment from './TrTreatment'
 export default function TableTreatmen({ data }) {
     return (
         <>
-            <div class="overflow-x-auto mb-5">
+            <div class="overflow-x-auto">
                 <table class="table w-full table-zebra">
                     <thead>
                         <tr>

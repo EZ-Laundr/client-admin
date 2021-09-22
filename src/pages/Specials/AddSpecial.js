@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import '../../index.css'
 import { addSpecial } from '../../store/specials/action'
+import ReactLoading from 'react-loading'
 
 
 export default function AddSpecial({ changeLogin }) {
@@ -14,14 +15,17 @@ export default function AddSpecial({ changeLogin }) {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [imageUrl, setImageUrl] = useState('')
+    const [loading, setLoading] = useState(false)
 
     async function add() {
         try {
             const payload = {
                 name, price, imageUrl
             }
+            setLoading(true)
             const result = await dispacth(addSpecial(payload))
             if (result) {
+                setLoading(false)
                 history.push('/specials')
             }
         } catch (err) {
@@ -77,7 +81,13 @@ export default function AddSpecial({ changeLogin }) {
                                             </div>
                                         </div>
                                         <div class="p-2 w-full">
-                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={add}>Add Special Treatment</button>
+                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={add}>
+                                                {
+                                                    loading ? (
+                                                        <ReactLoading type={'bars'} color={'white'} height={20} width={20} />
+                                                    ) : 'Add Special Treatment'
+                                                }
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
