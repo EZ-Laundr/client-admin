@@ -68,17 +68,19 @@ export default function ChatRooms({ changeLogin }) {
                     <Navbar />
                     <div className="flex-grow min-h-16">
                         <div className="container px-5 py-9 mx-auto">
-                            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Customer Chat</h1>
+                            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Chat</h1>
                             <div class="flex">
                                 <div class="flex-none w-1/3 h-96">
                                     <div className="border-b-2">
-                                        <input className="w-full p-5 focus:outline-none" placeholder="search" />
+                                        <div className="p-4 text-2xl">
+                                            Customers
+                                        </div>
                                     </div>
                                     <div className="mt-2 h-96 overflow-auto">
                                         {
                                             isLoadingOrder ? (
                                                 <div className="flex justify-center py-20">
-                                                    <ReactLoading type={'spin'} color={'blue'} height={'20%'} width={'20%'} />
+                                                    <ReactLoading type={'spin'} color={'#107CF1'} height={'20%'} width={'20%'} />
                                                 </div>
                                             ) : (
                                                 <ul className="mt-2">

@@ -1,7 +1,8 @@
-import { GET_USER } from './actionType'
+import { GET_USER, LOADING_LOGIN } from './actionType'
 
 const initialState = {
-    user: {}
+    user: {},
+    isLoadingLogin: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 user: action.payload
+            }
+        case LOADING_LOGIN:
+            return {
+                ...state,
+                isLoadingLogin: action.payload
             }
         default:
             return state

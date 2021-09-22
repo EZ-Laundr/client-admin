@@ -4,10 +4,13 @@ import orderApi from '../apis/order'
 import '../index.css'
 import { getOrders, oneOrder } from '../store/orders/action'
 import 'animate.css'
+import Swal from 'sweetalert2'
+import { useState } from 'react'
 
 export default function TrOrder({ el, i }) {
     const history = useHistory()
     const dispacth = useDispatch()
+    const [loading, setLoading] = useState(false)
 
     async function detail() {
         const id = el.id
@@ -24,11 +27,27 @@ export default function TrOrder({ el, i }) {
 
     async function updateStatus() {
         try {
-            const result = await orderApi({
-                method: 'patch',
-                url: `/${el.id}`
+            const { isConfirmed } = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to change order status ?!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, change it!'
             })
-            dispacth(getOrders())
+            if (isConfirmed) {
+                setLoading(true)
+                const result = await orderApi({
+                    method: 'patch',
+                    url: `/${el.id}`
+                })
+                if (result) {
+                    setLoading(false)
+                    dispacth(getOrders())
+                }
+            }
+
         } catch (err) {
             console.log(err)
         }
@@ -52,7 +71,7 @@ export default function TrOrder({ el, i }) {
                     <button onClick={detail} className="btn btn-primary hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">Detail</button>
                     {
                         el.status === 'On Progress' && (
-                            <button onClick={updateStatus} className="btn btn-accent hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ">Done</button>
+                            <button onClick={updateStatus} className={loading ? 'btn btn-accent loading' : "btn btn-accent hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"}>{!loading && 'Done'}</button>
                         )
                     }
                 </td>

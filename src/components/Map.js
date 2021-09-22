@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '../index.css'
 
-export default function Map() {
+export default function Map({ customerLat, customerLong }) {
     const [lng, setLng] = useState(112.68536277903817)
     const [lat, setLat] = useState(-7.44213259649106,)
     const [zoom, setZoom] = useState(10)
