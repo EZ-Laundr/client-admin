@@ -9,9 +9,10 @@ export default function TableOrder({ data }) {
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Email</th>
                             <th>Order ID</th>
-                            <th>Customer Email</th>
-                            <th>Service</th>
+                            <th>Status Pembayaran</th>
+                            <th>Layanan</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>

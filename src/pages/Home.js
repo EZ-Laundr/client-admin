@@ -14,6 +14,7 @@ export default function Home({ isLogin, changeLogin }) {
     const { orders, isLoadingOrder } = useSelector(store => {
         return store.orders
     })
+    console.log(orders)
     const dispacth = useDispatch()
     useEffect(() => {
         dispacth(getOrders())

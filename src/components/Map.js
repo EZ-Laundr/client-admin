@@ -29,7 +29,7 @@ export default function Map({ customerLat, customerLong }) {
 
     return (
         <>
-            <div id="map" className="h-52">
+            <div id="map" className="h-60 w-full">
 
             </div>
         </>

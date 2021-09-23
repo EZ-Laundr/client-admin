@@ -40,6 +40,7 @@ export default function Detail({ changeLogin }) {
     const [priceService, setPriceService] = useState('')
     const [perfumePrice, setPerfumePrice] = useState('')
     const [loading, setLoading] = useState(false)
+    const [loadingDone, setLoadingDone] = useState(false)
 
     async function fetchDetail() {
         try {
@@ -53,6 +54,34 @@ export default function Detail({ changeLogin }) {
             setPerfume(result?.Perfume.name)
             setPerfumePrice(result?.Perfume.price)
             setTotalPrice(result?.totalPrice)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    async function updateStatus() {
+        try {
+            const { isConfirmed } = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to change order status ?!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, change it!'
+            })
+            if (isConfirmed) {
+                setLoadingDone(true)
+                const result = await orderApi({
+                    method: 'patch',
+                    url: `/${order.id}`
+                })
+                if (result) {
+                    setLoadingDone(false)
+                    fetchDetail()
+                }
+            }
+
         } catch (err) {
             console.log(err)
         }
@@ -143,7 +172,12 @@ export default function Detail({ changeLogin }) {
                                                     <div className="flex justify-between">
                                                         <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">{email}</h1>
                                                         <div className="text-gray-900 text-xl title-font font-medium mb-4">
-                                                            Status : <div class="badge badge-accent p-5">{status}</div>
+                                                            Status :
+                                                            <div className={
+                                                                status === 'pending' ? ' badge badge-warning badge-lg p-5 shadow-lg ml-3' : status === 'On Progress' ? ' badge badge-info badge-lg p-5 shadow-lg ml-3' : ' badge badge-success badge-lg p-5 shadow-lg ml-3'
+                                                            }>
+                                                                {status}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div className="text-lg title-font  tracking-widest mb-4">Service: {service} | {formatPrice(priceService)} <i className="text-green-500 fa-lg far fa-check-circle"></i></div>
@@ -185,7 +219,7 @@ export default function Detail({ changeLogin }) {
                                                             <TableTreatmen data={orderSpecials} />
                                                         )
                                                     }
-                                                    <div className="flex border-gray-200 py-2 -mt-4">
+                                                    <div className="flex border-gray-200 py-2 mt-4">
                                                         {
                                                             order.weight === 0 ? (
                                                                 <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="input weight" class="input input-bordered w-full" />
@@ -199,9 +233,12 @@ export default function Detail({ changeLogin }) {
                                                         <span className="title-font font-medium text-2xl text-gray-900">{formatPrice(totalPrice)}</span>
                                                         <div className="flex space-x-3">
                                                             {
-                                                                order.weight === 0 && <button onClick={processOrder} className={loading ? 'flex btn btn-primary loading' : 'flex btn btn-primary'}>Process</button>
+                                                                order.weight === 0 && <button style={{ backgroundColor: '#107CF1' }} onClick={processOrder} className={loading ? 'flex btn border-2 loading' : 'btn border-2 hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110'}>Process</button>
                                                             }
-                                                            <button onClick={() => history.push('/')} className="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Back</button>
+                                                            {
+                                                                order.status === 'On Progress' && <button onClick={updateStatus} style={{ backgroundColor: '#48bb78' }} className={loadingDone ? 'btn border-2 loading' : "btn border-2 hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"}>{!loadingDone && 'Done'}</button>
+                                                            }
+                                                            <button onClick={() => history.push('/')} className="btn border-2 bg-red-600  focus:outline-none hover:bg-red-600 nsition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">Back</button>
                                                         </div>
                                                     </div>
                                                 </div>
