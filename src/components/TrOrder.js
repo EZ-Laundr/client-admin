@@ -57,8 +57,17 @@ export default function TrOrder({ el, i }) {
         <>
             <tr>
                 <th>{i + 1}</th>
-                <td>{el.id}</td>
                 <td>{el.User.email}</td>
+                <td>{el.id}</td>
+                <td>
+                    {
+                        el.statusPayment ? (
+                            <div style={{ backgroundColor: '#38b2ac' }} class="badge p-3">sudah bayar</div>
+                        ) : (
+                            <div style={{ backgroundColor: '#e53e3e' }} class="badge p-3">belum bayar</div>
+                        )
+                    }
+                </td>
                 <td>{el.Service.name}</td>
                 <td className="animate__animated animate__zoomIn ">
                     <div className={
@@ -68,10 +77,10 @@ export default function TrOrder({ el, i }) {
                     </div>
                 </td>
                 <td className="space-x-3">
-                    <button onClick={detail} className="btn btn-primary hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">Detail</button>
+                    <button onClick={detail} style={{ backgroundColor: '#107CF1' }} className="btn border-2 hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">Detail</button>
                     {
                         el.status === 'On Progress' && (
-                            <button onClick={updateStatus} className={loading ? 'btn btn-accent loading' : "btn btn-accent hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"}>{!loading && 'Done'}</button>
+                            <button style={{ backgroundColor: '#48bb78' }} onClick={updateStatus} className={loading ? 'btn border-2 loading' : "btn border-2 hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"}>{!loading && 'Done'}</button>
                         )
                     }
                 </td>

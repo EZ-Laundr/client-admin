@@ -157,14 +157,11 @@ export default function ChatRooms({ changeLogin }) {
                                                                             <li className="flex items-center bg-white mt-2 p-2  rounded">
                                                                                 <div className="flex ml-2">
                                                                                     {" "}
-                                                                                    <img
-                                                                                        src="https://i.ibb.co/G9TWJY9/Batch-14-Ahmad-Azzam-S.png"
-                                                                                        width="40"
-                                                                                        height="40"
-                                                                                        class="rounded-full"
-                                                                                    />
+                                                                                    <div className="p-1">
+                                                                                        <i style={{ color: '#107CF1' }} class="fas fa-user text-3xl"></i>
+                                                                                    </div>
                                                                                     <div className="flex items-center ml-2  px-5 py-2 rounded-xl text-white bg-indigo-400">
-                                                                                        <span className="">
+                                                                                        <span className="w-full">
                                                                                             {
                                                                                                 el.text
                                                                                             }
