@@ -59,55 +59,6 @@ export default function Detail({ changeLogin }) {
         }
     }
 
-    async function updateStatus() {
-        try {
-            const { isConfirmed } = await Swal.fire({
-                title: 'Are you sure?',
-                text: "You want to change order status ?!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, change it!'
-            })
-            if (isConfirmed) {
-                setLoadingDone(true)
-                const result = await orderApi({
-                    method: 'patch',
-                    url: `/${order.id}`
-                })
-                if (result) {
-                    setLoadingDone(false)
-                    fetchDetail()
-                }
-            }
-
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    useEffect(() => {
-        const changeTextAddress = JSON.parse(order.customerAddress)
-        const { latitude, longitude } = changeTextAddress
-        setLatCustomer(latitude)
-        setLongCustomer(longitude)
-    }, [])
-
-    useEffect(() => {
-        if (localStorage.getItem('access_token')) {
-            fetchDetail()
-        } else {
-            history.push('/login')
-        }
-    }, [])
-
-    useEffect(() => {
-        const before = order.totalPrice
-        const totalWeight = weight === 0 ? 1 : weight
-        setTotalPrice(before + Number(Number(priceService) * Number(totalWeight)))
-    }, [weight])
-
     async function processOrder() {
         try {
             const { isConfirmed } = await Swal.fire({
@@ -149,6 +100,57 @@ export default function Detail({ changeLogin }) {
             console.log(err)
         }
     }
+
+    async function updateStatus() {
+        try {
+            const { isConfirmed } = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to change order status ?!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, change it!'
+            })
+            if (isConfirmed) {
+                setLoadingDone(true)
+                const result = await orderApi({
+                    method: 'patch',
+                    url: `/${order.id}`
+                })
+                if (result) {
+                    setLoadingDone(false)
+                    fetchDetail()
+                }
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    // useEffect(() => {
+    //     const changeTextAddress = JSON.parse(order.customerAddress)
+    //     const { latitude, longitude } = changeTextAddress
+    //     setLatCustomer(latitude)
+    //     setLongCustomer(longitude)
+    // }, [])
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token')) {
+            fetchDetail()
+        } else {
+            history.push('/login')
+        }
+    }, [])
+
+    useEffect(() => {
+        const before = order.totalPrice
+        const totalWeight = weight === 0 ? 1 : weight
+        setTotalPrice(before + Number(Number(priceService) * Number(totalWeight)))
+    }, [weight])
+
+
 
     return (
         <>
